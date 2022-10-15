@@ -15,6 +15,10 @@
 # A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression_with_xor.mk)
 
+PRODUCT_PACKAGES += \
+    checkpoint_gc \
+    otapreopt_script
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
@@ -100,6 +104,9 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.vendor.btstack.enable.lpa=true \
     persist.vendor.btstack.enable.twsplus=true \
     persist.vendor.bt.a2dp.aac_whitelist=false
+
+# Board
+TARGET_BOARD_PLATFORM := kona
 
 # Boot
 PRODUCT_PACKAGES += \
@@ -285,6 +292,10 @@ PRODUCT_VENDOR_PROPERTIES += \
     persist.vendor.radio.manual_nw_rej_ct=1
 
 # QTI
+
+# Include Common Qualcomm Device Tree.
+$(call inherit-product, device/qcom/common/common.mk)
+
 TARGET_COMMON_QTI_COMPONENTS := all
 TARGET_NFC_SKU := pro
 

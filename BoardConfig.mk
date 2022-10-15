@@ -100,6 +100,9 @@ ODM_MANIFEST_PRO_FILES := \
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+SKIP_BOOT_JARS_CHECK := true
+DISABLE_EAP_PROXY := true
 
 # Init
 TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_alioth
@@ -121,6 +124,10 @@ BOARD_KERNEL_CMDLINE := \
     service_locator.enable=1 \
     swiotlb=2048
 
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+TARGET_KERNEL_CROSS_COMPILE_ARM32_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+TARGET_COMPILE_WITH_MSM_KERNEL := true
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_RAMDISK_OFFSET := 0x01000000
@@ -160,6 +167,14 @@ BOARD_EROFS_PCLUSTER_SIZE := 262144
 PRODUCT_FS_COMPRESSION := 1
 PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
 
+# Move Wi-Fi modules to vendor.
+PRODUCT_VENDOR_MOVE_ENABLED := true
+
+# Qualcomm variables
+SOONG_CONFIG_NAMESPACES += aosp_vs_qva
+SOONG_CONFIG_aosp_vs_qva += aosp_or_qva
+SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := qva
+
 # Recovery
 BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
@@ -172,3 +187,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # SEPolicy
 -include device/xiaomi/alioth/sepolicy/alioth-sepolicy.mk
+
+# Include QCOM common Board configuration
+-include device/qcom/common/BoardConfigQcom.mk
