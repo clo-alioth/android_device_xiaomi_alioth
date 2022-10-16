@@ -288,6 +288,11 @@ PRODUCT_VENDOR_PROPERTIES += \
 TARGET_COMMON_QTI_COMPONENTS := all
 TARGET_NFC_SKU := pro
 
+# Sensitive phone numbers and APN configurations
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml \
+    $(LOCAL_PATH)/configs/sensitive_pn.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sensitive_pn.xml
+
 # Sensors
 PRODUCT_VENDOR_PROPERTIES += \
     persist.vendor.sensors.allow_non_default_discovery=true \
